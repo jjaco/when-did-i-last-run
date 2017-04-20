@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 import requests_cache
 import os
+from datetime import datetime
 
 requests_cache.install_cache('strava', expire_after=10800)  # cache for 3 hours
 
@@ -21,6 +22,8 @@ def get_most_recent_activity(athlete_id):
 
 
 athlete_id = get_athlete_id(access_token)
-most_recent_activity = get_most_recent_activity(athlete_id)
+most_recent_activity_time = get_most_recent_activity(athlete_id)
 
-print("Last run was {0} ago".format(pd.to_datetime('now') - most_recent_activity))
+timedelta = datetime.now() - most_recent_activity_time
+
+print("Last run was {0} days, {1} hours, {2} seconds ago".format(timedelta.components.days, timedelta.components.hours, timedelta.components.seconds))
