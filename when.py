@@ -26,4 +26,6 @@ most_recent_activity_time = get_most_recent_activity(athlete_id)
 
 timedelta = datetime.now() - most_recent_activity_time
 
-print("Last run was {0} days, {1} hours, {2} seconds ago".format(timedelta.components.days, timedelta.components.hours, timedelta.components.seconds))
+print("Last run was {0} days {1} hours {2} minutes ago".format(timedelta.components.days, 
+                                                                timedelta.components.hours, 
+                                                                timedelta.components.minutes))
