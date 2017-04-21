@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+from requests.exceptions import ConnectionError
 import requests_cache
 import os
 from datetime import datetime
@@ -21,11 +22,13 @@ def get_most_recent_activity(athlete_id):
     return pd.to_datetime(response.json()[0]['start_date_local'])
 
 
-athlete_id = get_athlete_id(access_token)
-most_recent_activity_time = get_most_recent_activity(athlete_id)
+try:
+    athlete_id = get_athlete_id(access_token)
+    most_recent_activity_time = get_most_recent_activity(athlete_id)
 
-timedelta = datetime.now() - most_recent_activity_time
-
-print("Last run was {0} days {1} hours {2} minutes ago".format(timedelta.components.days, 
-                                                                timedelta.components.hours, 
-                                                                timedelta.components.minutes))
+    timedelta = datetime.now() - most_recent_activity_time
+    print("Last run was {0} days {1} hours {2} minutes ago".format(timedelta.components.days,
+                                                                   timedelta.components.hours,
+                                                                   timedelta.components.minutes))
+except ConnectionError:
+    print("No internet connection")
